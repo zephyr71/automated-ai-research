@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 과학자 | Nature 2026 한국어 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kw-red:#C8102E;--kw-dark:#9B0C22;--kw-faint:#FFF0F2;
+  --gold:#B8973A;--gold-l:#D4AF5A;
+  --ink:#0B0F1A;--ink2:#111827;
+  --bg:#F9F8F5;--bg2:#F2F0EB;
+  --white:#FFFFFF;
+  --t1:#1A1A1A;--t2:#444;--t3:#777;
+  --border:#E2DDD5;
+  --green:#16A34A;--amber:#D97706;--purple:#7C3AED;--blue:#1D4ED8;
+  --r:12px;--rl:20px;
+  --tr:all .3s cubic-bezier(.4,0,.2,1);
+  --sh:0 2px 16px rgba(0,0,0,.07);--sh2:0 12px 40px rgba(0,0,0,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--t1);line-height:1.7;overflow-x:hidden}
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--kw-red),var(--gold));z-index:9999;width:0;transition:width .1s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;background:rgba(11,15,26,.96);backdrop-filter:blur(18px);z-index:1000;padding:0 2rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;font-family:'Noto Serif KR',serif;font-weight:700;font-size:.9rem}
+.nav-mark{width:32px;height:32px;background:var(--kw-red);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:white;flex-shrink:0}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.6);font-size:.8rem;font-weight:500;transition:var(--tr)}
+.nav-links a:hover{color:white}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.ham span{display:block;width:22px;height:2px;background:white;border-radius:2px;transition:var(--tr)}
+.mob{display:none;position:fixed;top:60px;left:0;right:0;background:var(--ink2);padding:1.5rem 2rem;z-index:999;flex-direction:column;gap:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.mob.open{display:flex}
+.mob a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.92rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(150deg,#050810 0%,#0B0F1A 40%,#130820 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding-top:60px}
+.hero-glow{position:absolute;inset:0}
+.hero-glow::before{content:'';position:absolute;width:800px;height:800px;background:radial-gradient(ellipse,rgba(200,16,46,.2) 0%,transparent 60%);top:-200px;right:-100px;animation:hglow 10s ease-in-out infinite}
+.hero-glow::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(ellipse,rgba(124,58,237,.15) 0%,transparent 60%);bottom:-100px;left:5%;animation:hglow 14s ease-in-out infinite reverse}
+@keyframes hglow{0%,100%{transform:scale(1)}50%{transform:scale(1.1) rotate(3deg)}}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:36px 36px}
+.hero-content{max-width:1240px;margin:0 auto;padding:7rem 2rem 5rem;position:relative;z-index:1;display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:center}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.3);color:#FCA5A5;padding:5px 14px;border-radius:100px;font-size:.73rem;font-weight:600;margin-bottom:1.5rem;letter-spacing:.5px}
+.hero-dot{width:6px;height:6px;background:#FCA5A5;border-radius:50%;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2rem,4.2vw,3.2rem);color:white;line-height:1.25;margin-bottom:1.25rem}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--gold-l),#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.9;margin-bottom:2.5rem;max-width:540px}
+.hero-btns{display:flex;gap:.875rem;flex-wrap:wrap}
+.bp{background:var(--kw-red);color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;border:2px solid var(--kw-red);transition:var(--tr);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.bp:hover{background:var(--kw-dark);border-color:var(--kw-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,16,46,.4)}
+.bs{background:transparent;color:rgba(255,255,255,.8);padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;border:2px solid rgba(255,255,255,.22);transition:var(--tr);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.bs:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
+
+/* HERO PANEL */
+.hero-panel{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:var(--rl);padding:1.75rem;backdrop-filter:blur(10px)}
+.hp-title{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-l);margin-bottom:1.25rem}
+.hp-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hp-row:last-child{border-bottom:none}
+.hp-lbl{font-size:.8rem;color:rgba(255,255,255,.55)}
+.hp-val{font-family:'Playfair Display',serif;font-size:1.4rem;color:white;font-weight:700}
+.hp-val.r{color:#F87171}.hp-val.g{color:#86EFAC}.hp-val.p{color:#C4B5FD}.hp-val.a{color:var(--gold-l)}
+
+/* ALERT STRIP */
+.alert-strip{background:linear-gradient(135deg,#1a0a2e 0%,#0f051a 100%);border-top:1px solid rgba(124,58,237,.3);border-bottom:1px solid rgba(124,58,237,.3);padding:2.5rem 2rem;text-align:center}
+.alert-strip-inner{max-width:900px;margin:0 auto}
+.alert-strip .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);color:#C4B5FD;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.5px;margin-bottom:1rem}
+.alert-strip h2{font-family:'Noto Serif KR',serif;font-size:clamp(1.3rem,2.5vw,1.8rem);color:white;margin-bottom:.75rem}
+.alert-strip p{font-size:.88rem;color:rgba(255,255,255,.65);line-height:1.85;max-width:700px;margin:0 auto}
+
+/* SECTIONS */
+section{padding:5.5rem 2rem}
+.container{max-width:1240px;margin:0 auto}
+.sl{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--kw-red);margin-bottom:.875rem}
+.sl::before{content:'';display:block;width:20px;height:2px;background:var(--kw-red);border-radius:2px}
+h2.st{font-family:'Noto Serif KR',serif;font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.3;margin-bottom:1rem}
+.sd{color:var(--t2);font-size:.875rem;max-width:640px;line-height:1.85;margin-bottom:3rem}
+
+/* PHASE STEPPER */
+.phase-stepper{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:2.5rem}
+.phase-card{background:white;border-radius:var(--rl);padding:1.75rem;box-shadow:var(--sh);border:1px solid var(--border);transition:var(--tr);position:relative;overflow:hidden;cursor:pointer}
+.phase-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.phase-card:hover::after{transform:scaleX(1)}
+.phase-card.p1::after{background:var(--kw-red)}
+.phase-card.p2::after{background:var(--purple)}
+.phase-card.p3::after{background:var(--blue)}
+.phase-card.p4::after{background:var(--green)}
+.phase-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.phase-num{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;line-height:1;opacity:.07;position:absolute;top:.5rem;right:1rem}
+.phase-card.p1 .phase-num{color:var(--kw-red)}
+.phase-card.p2 .phase-num{color:var(--purple)}
+.phase-card.p3 .phase-num{color:var(--blue)}
+.phase-card.p4 .phase-num{color:var(--green)}
+.phase-icon{font-size:1.8rem;margin-bottom:.875rem}
+.phase-step{font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.phase-card.p1 .phase-step{color:var(--kw-red)}
+.phase-card.p2 .phase-step{color:var(--purple)}
+.phase-card.p3 .phase-step{color:var(--blue)}
+.phase-card.p4 .phase-step{color:var(--green)}
+.phase-card h3{font-family:'Noto Serif KR',serif;font-size:1.05rem;margin-bottom:.625rem}
+.phase-card p{font-size:.82rem;color:var(--t2);line-height:1.75}
+.phase-detail{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--t2);line-height:1.75}
+.phase-card.expanded .phase-detail{display:block}
+.phase-card.expanded{border-color:rgba(200,16,46,.3);box-shadow:0 0 0 3px rgba(200,16,46,.08),var(--sh2)}
+.phase-hint{font-size:.72rem;color:var(--t3);margin-top:.875rem;font-style:italic}
+
+/* RESULT SHOWCASE */
+.result-section{background:linear-gradient(180deg,var(--ink) 0%,#0A0514 100%);color:white}
+.result-section .sl{color:var(--gold-l)}
+.result-section .sl::before{background:var(--gold-l)}
+.result-section h2.st{color:white}
+.result-section .sd{color:rgba(255,255,255,.6)}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-bottom:3rem}
+.rc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--rl);padding:1.75rem;transition:var(--tr)}
+.rc:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);transform:translateY(-3px)}
+.rc-icon{font-size:1.6rem;margin-bottom:.875rem}
+.rc h3{font-family:'Noto Serif KR',serif;font-size:1rem;color:white;margin-bottom:.625rem}
+.rc p{font-size:.82rem;color:rgba(255,255,255,.62);line-height:1.75}
+.rc-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;margin:.5rem 0 .25rem}
+
+/* SCORE DISPLAY */
+.score-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:var(--rl);padding:2rem;max-width:680px;margin:0 auto 2rem}
+.score-title{text-align:center;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-l);margin-bottom:1.5rem}
+.score-bars{display:flex;flex-direction:column;gap:.875rem}
+.score-row{display:flex;align-items:center;gap:.875rem}
+.score-lbl{font-size:.8rem;color:rgba(255,255,255,.6);width:160px;flex-shrink:0;text-align:right}
+.score-track{flex:1;height:28px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
+.score-fill{height:100%;border-radius:8px;display:flex;align-items:center;padding-left:10px;font-size:.75rem;font-weight:700;color:white;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.score-val{font-size:.8rem;color:rgba(255,255,255,.7);width:48px;flex-shrink:0;font-family:'Playfair Display',serif}
+
+/* COMPARISON TABLE */
+.cmp-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:2rem;border-radius:var(--r);overflow:hidden}
+.cmp-table th{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);padding:.875rem 1rem;text-align:center;font-weight:600;font-size:.75rem}
+.cmp-table th:first-child{text-align:left}
+.cmp-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.65);text-align:center}
+.cmp-table td:first-child{text-align:left;font-weight:600;color:rgba(255,255,255,.85)}
+.cmp-table tr:hover td{background:rgba(255,255,255,.03)}
+.best{color:#86EFAC;font-weight:700}
+
+/* LIMIT SECTION */
+.limit-section{background:var(--bg2)}
+.limit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:2.5rem}
+.lc{background:white;border-radius:var(--rl);padding:1.75rem;box-shadow:var(--sh);border:1px solid var(--border);transition:var(--tr);border-left:4px solid transparent}
+.lc:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.lc.type-fail{border-left-color:#EF4444}
+.lc.type-future{border-left-color:#3B82F6}
+.lc.type-ethics{border-left-color:#F59E0B}
+.lc-badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;margin-bottom:.75rem;letter-spacing:.5px}
+.lc.type-fail .lc-badge{background:#FEE2E2;color:#DC2626}
+.lc.type-future .lc-badge{background:#EFF6FF;color:#1D4ED8}
+.lc.type-ethics .lc-badge{background:#FFFBEB;color:#B45309}
+.lc h3{font-family:'Noto Serif KR',serif;font-size:.98rem;margin-bottom:.625rem}
+.lc p{font-size:.82rem;color:var(--t2);line-height:1.75}
+
+/* FAQ */
+.faq-list{max-width:780px;margin-top:2.5rem}
+.fi{border:1px solid var(--border);border-radius:var(--r);margin-bottom:.7rem;overflow:hidden;background:white;transition:var(--tr)}
+.fi.open{box-shadow:0 4px 20px rgba(200,16,46,.1);border-color:rgba(200,16,46,.28)}
+.fq{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.15rem 1.4rem;background:none;border:none;text-align:left;font-family:'Noto Sans KR',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;color:var(--t1);gap:1rem;transition:var(--tr)}
+.fi.open .fq{color:var(--kw-red)}
+.fi-icon{width:26px;height:26px;flex-shrink:0;background:var(--kw-faint);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--kw-red);font-size:.88rem;font-weight:700;transition:var(--tr)}
+.fi.open .fi-icon{background:var(--kw-red);color:white;transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.fa-body{padding:0 1.4rem 1.4rem;border-top:1px solid var(--border);padding-top:1.15rem;font-size:.845rem;color:var(--t2);line-height:1.85}
+.fa-body strong{color:var(--kw-dark)}
+
+/* INTERACTIVE QUIZ */
+.quiz-section{background:linear-gradient(135deg,#0f1a35 0%,#1a0d1a 100%);color:white}
+.quiz-section .sl{color:var(--gold-l)}
+.quiz-section .sl::before{background:var(--gold-l)}
+.quiz-section h2.st{color:white}
+.quiz-section .sd{color:rgba(255,255,255,.62)}
+.quiz-box{max-width:720px;margin:0 auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:2.5rem}
+.quiz-q{font-family:'Noto Serif KR',serif;font-size:1.05rem;color:white;margin-bottom:1.5rem;line-height:1.6}
+.quiz-opts{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem}
+.quiz-opt{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);border-radius:10px;padding:.875rem 1.25rem;color:rgba(255,255,255,.8);font-family:'Noto Sans KR',sans-serif;font-size:.87rem;cursor:pointer;text-align:left;transition:var(--tr)}
+.quiz-opt:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+.quiz-opt.correct{background:rgba(22,163,74,.2);border-color:rgba(22,163,74,.5);color:#86EFAC}
+.quiz-opt.wrong{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);color:#FCA5A5}
+.quiz-feedback{display:none;padding:1rem 1.25rem;border-radius:10px;font-size:.85rem;line-height:1.75;margin-bottom:1.25rem}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.35);color:#86EFAC}
+.quiz-feedback.no{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#FCA5A5}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.875rem}
+.quiz-score-bar{flex:1;min-width:140px}
+.quiz-score-lbl{font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:.35rem}
+.quiz-score-track{height:8px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden}
+.quiz-score-fill{height:100%;background:linear-gradient(90deg,var(--kw-red),var(--gold-l));border-radius:100px;transition:width .5s ease;width:0%}
+.quiz-next{background:var(--kw-red);color:white;border:none;padding:10px 22px;border-radius:8px;font-family:'Noto Sans KR',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.quiz-next:hover{background:var(--kw-dark);transform:translateY(-1px)}
+.quiz-next:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.quiz-progress{font-size:.75rem;color:rgba(255,255,255,.45);text-align:center;margin-bottom:1.25rem}
+
+/* CITE */
+.cite-section{background:#060810;color:rgba(255,255,255,.8)}
+.cite-section .sl{color:var(--gold-l)}
+.cite-section .sl::before{background:var(--gold-l)}
+.cite-section h2.st{color:white}
+.cite-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:var(--rl);padding:2.5rem;font-family:'Georgia',serif;font-size:.875rem;line-height:2;color:rgba(255,255,255,.77);position:relative;margin-bottom:1.25rem}
+.cite-box::before{content:'APA';position:absolute;top:-11px;left:18px;background:var(--gold);color:white;padding:2px 10px;border-radius:100px;font-family:'Noto Sans KR',sans-serif;font-size:.67rem;font-weight:700;letter-spacing:1px}
+.cbtn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.62);padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:.8rem;transition:var(--tr);display:inline-flex;align-items:center;gap:7px}
+.cbtn:hover{background:rgba(255,255,255,.13);color:white}
+.cbtn.done{background:rgba(22,163,74,.18);border-color:rgba(22,163,74,.4);color:#86EFAC}
+.info-box{margin-top:1.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:1.5rem}
+.info-box p{font-size:.84rem;color:rgba(255,255,255,.62);line-height:2}
+.info-box a{color:var(--gold-l);text-decoration:none}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* BTT */
+#btt{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;background:var(--kw-red);color:white;border:none;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 4px 16px rgba(200,16,46,.45);transition:var(--tr);z-index:100}
+#btt:hover{background:var(--kw-dark);transform:translateY(-3px)}
+#btt.show{display:flex}
+
+footer{background:#03050C;color:rgba(255,255,255,.38);text-align:center;padding:2rem;font-size:.76rem}
+footer a{color:rgba(200,16,46,.8);text-decoration:none}
+
+@media(max-width:900px){.hero-content{grid-template-columns:1fr}.hero-panel{display:none}}
+@media(max-width:768px){.nav-links{display:none}.ham{display:flex}section{padding:4rem 1.25rem}.hero-content{padding:5rem 1.25rem 4rem}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<button id="btt" aria-label="맨 위로">↑</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-mark">KW</div>
+      AI Scientist · Nature 2026
+    </a>
+    <ul class="nav-links">
+      <li><a href="#phases">연구 파이프라인</a></li>
+      <li><a href="#results">핵심 결과</a></li>
+      <li><a href="#limits">한계·윤리</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#quiz">퀴즈</a></li>
+      <li><a href="#citation">참고문헌</a></li>
+    </ul>
+    <button class="ham" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob" id="mob">
+  <a href="#phases" onclick="cm()">연구 파이프라인</a>
+  <a href="#results" onclick="cm()">핵심 결과</a>
+  <a href="#limits" onclick="cm()">한계·윤리</a>
+  <a href="#faq" onclick="cm()">FAQ</a>
+  <a href="#quiz" onclick="cm()">퀴즈</a>
+  <a href="#citation" onclick="cm()">참고문헌</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-pill"><div class="hero-dot"></div>Nature · Vol 651 · 26 March 2026 · Sakana AI</div>
+      <h1>AI가 스스로<br>논문을 쓰고<br><em>동료 심사를 통과했다</em></h1>
+      <p class="hero-sub">The AI Scientist는 아이디어 창안부터 실험 수행, 논문 작성, 자체 동료 심사까지 과학 연구의 전 생애 주기를 자동화한 최초의 엔드-투-엔드 시스템입니다. 그리고 최상위 ML 컨퍼런스 워크숍의 동료 심사를 실제로 통과했습니다.</p>
+      <div class="hero-btns">
+        <a href="#phases" class="bp">연구 파이프라인 보기 →</a>
+        <a href="#results" class="bs">핵심 결과 확인</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hp-title">📊 논문 핵심 수치</div>
+      <div class="hp-row"><span class="hp-lbl">게재 저널</span><span class="hp-val a" style="font-size:.95rem;font-family:'Noto Serif KR',serif">Nature</span></div>
+      <div class="hp-row"><span class="hp-lbl">동료 심사 통과</span><span class="hp-val g">1 / 3</span></div>
+      <div class="hp-row"><span class="hp-lbl">워크숍 수락률</span><span class="hp-val a">70%</span></div>
+      <div class="hp-row"><span class="hp-lbl">합격 논문 평균 점수</span><span class="hp-val g">6.33 / 10</span></div>
+      <div class="hp-row"><span class="hp-lbl">AI 리뷰어 균형 정확도</span><span class="hp-val p">69%</span></div>
+      <div class="hp-row"><span class="hp-lbl">인간 리뷰어 정확도</span><span class="hp-val">66%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERT STRIP -->
+<div class="alert-strip">
+  <div class="alert-strip-inner">
+    <div class="badge">🔬 역사적 이정표</div>
+    <h2>과학의 새 시대 — 발견이 더 이상 인간만의 영역이 아니다</h2>
+    <p>인류 역사상 처음으로 완전히 AI가 작성한 논문이 최상위 머신러닝 컨퍼런스 워크숍의 정식 동료 심사 과정을 통과했습니다. Sakana AI(도쿄), 옥스퍼드 대학교, UBC, 벡터 연구소의 공동 연구팀이 Nature에 게재한 이 성과는 AI가 수백 년을 이어온 과학적 발견의 패러다임을 바꾸기 시작했음을 보여줍니다.</p>
+  </div>
+</div>
+
+<!-- PHASES -->
+<section id="phases">
+  <div class="container">
+    <span class="sl">연구 파이프라인</span>
+    <h2 class="st">AI Scientist는 어떻게 논문을 만드나?</h2>
+    <p class="sd">4단계 순차 파이프라인으로 구성됩니다. 각 카드를 클릭하면 상세 내용을 확인할 수 있습니다.</p>
+    <div class="phase-stepper">
+
+      <div class="phase-card p1" onclick="togglePhase(this)">
+        <div class="phase-num">01</div>
+        <div class="phase-icon">💡</div>
+        <div class="phase-step">Phase 1</div>
+        <h3>아이디어 창안 (Ideation)</h3>
+        <p>LLM이 연구 방향과 가설의 아카이브를 반복적으로 성장시킵니다. 각 아이디어는 Semantic Scholar API와 웹 검색을 통해 기존 문헌과 비교해 중복 여부를 자동 필터링합니다.</p>
+        <div class="phase-detail">
+          <strong>세부 동작:</strong> 각 아이디어는 제목, 핵심 가설, 상세 실험 계획을 포함한 구조화 객체로 생성됩니다. 흥미도·참신성·실현 가능성을 1~10점으로 자체 평가합니다. 10라운드에 걸쳐 문헌 검색을 수행하며 기존 연구와 높은 의미적 유사성이 있는 아이디어는 자동 폐기됩니다. 시스템은 "상당한 기여를 목표로 하는 야심찬 AI 박사 학생"으로 프롬프트됩니다.
+        </div>
+        <p class="phase-hint">👆 클릭해서 더 보기</p>
+      </div>
+
+      <div class="phase-card p2" onclick="togglePhase(this)">
+        <div class="phase-num">02</div>
+        <div class="phase-icon">🧪</div>
+        <div class="phase-step">Phase 2</div>
+        <h3>실험 수행 (Experimentation)</h3>
+        <p>제안된 실험을 실제로 실행하고 결과를 시각화합니다. 템플릿 기반과 템플릿 프리(자유 탐색) 두 가지 방식이 있으며, 프리 버전은 에이전틱 트리 탐색을 활용합니다.</p>
+        <div class="phase-detail">
+          <strong>4단계 트리 탐색:</strong> (1) 예비 조사 → (2) 하이퍼파라미터 튜닝 → (3) 연구 아젠다 실행 → (4) 절제 연구(ablation). 각 단계에서 가장 유망한 체크포인트를 다음 단계의 시드로 선택합니다. 실행 오류 발생 시 자동으로 디버깅하며 최대 4회 재시도합니다. 각 노드의 최대 실험 실행 시간은 1시간입니다. Claude Sonnet 4가 코드 생성에 사용됩니다.
+        </div>
+        <p class="phase-hint">👆 클릭해서 더 보기</p>
+      </div>
+
+      <div class="phase-card p3" onclick="togglePhase(this)">
+        <div class="phase-num">03</div>
+        <div class="phase-icon">✍️</div>
+        <div class="phase-step">Phase 3</div>
+        <h3>논문 작성 (Write-up)</h3>
+        <p>실험 결과를 표준 ML 컨퍼런스 논문 형식의 LaTeX로 작성합니다. 20라운드에 걸쳐 문헌을 검색하고 각 인용에 대한 텍스트 근거를 생성해 적절히 삽입합니다.</p>
+        <div class="phase-detail">
+          <strong>세부 동작:</strong> 실험 저널을 분석해 핵심 발견을 요약하고 생성된 그림을 삽입합니다. Semantic Scholar API로 관련 문헌을 찾아 관련 연구 섹션을 구성합니다. LaTeX 컴파일 오류는 최대 5회 자동 수정됩니다. VLM(비전-언어 모델)이 그림과 캡션의 정합성을 검토합니다.
+        </div>
+        <p class="phase-hint">👆 클릭해서 더 보기</p>
+      </div>
+
+      <div class="phase-card p4" onclick="togglePhase(this)">
+        <div class="phase-num">04</div>
+        <div class="phase-icon">🔍</div>
+        <div class="phase-step">Phase 4</div>
+        <h3>자동 동료 심사 (Peer Review)</h3>
+        <p>자동화된 리뷰어가 NeurIPS 심사 가이드라인에 따라 생성된 논문을 평가합니다. 5개의 독립적 리뷰를 앙상블해 최종 메타 리뷰를 생성합니다.</p>
+        <div class="phase-detail">
+          <strong>세부 동작:</strong> 건전성·발표 수준·기여도·전체 품질·리뷰어 신뢰도를 수치로 평가합니다. 강점과 약점 목록, 수락/거부의 이진 판정도 포함됩니다. LLM이 에어리어 체어 역할을 맡아 5개 리뷰의 합의를 도출합니다. o4-mini 모델 기반으로 구축되었습니다.
+        </div>
+        <p class="phase-hint">👆 클릭해서 더 보기</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="result-section" id="results">
+  <div class="container">
+    <span class="sl">핵심 결과</span>
+    <h2 class="st">무엇을 달성했나?</h2>
+    <p class="sd">The AI Scientist가 실제 동료 심사 과정에 제출한 결과와 자동화 리뷰어의 성능을 정리했습니다.</p>
+
+    <div class="result-grid">
+      <div class="rc reveal">
+        <div class="rc-icon">🏆</div>
+        <h3>동료 심사 통과</h3>
+        <div class="rc-num" style="color:#86EFAC">1 / 3</div>
+        <p>제출한 3편 중 1편이 ICLR 2025 ICBINB 워크숍 동료 심사를 통과했습니다. 수락률 70%의 워크숍에서 평균 합격 기준을 초과하는 점수를 받았습니다.</p>
+      </div>
+      <div class="rc reveal">
+        <div class="rc-icon">📊</div>
+        <h3>합격 논문 심사 점수</h3>
+        <div class="rc-num" style="color:var(--gold-l)">6.33</div>
+        <p>3명의 심사위원이 각각 6점(약한 수락), 7점(수락), 6점(약한 수락)을 부여했습니다. 워크숍 내 상위 45%에 해당하는 점수입니다.</p>
+      </div>
+      <div class="rc reveal">
+        <div class="rc-icon">🤖</div>
+        <h3>자동 리뷰어 정확도</h3>
+        <div class="rc-num" style="color:#C4B5FD">69%</div>
+        <p>자동화 리뷰어의 균형 정확도는 69%로 인간 리뷰어(66%)와 동등하거나 우수합니다. F1 점수(0.62)도 인간 간 합의 수준(0.49)을 초과했습니다.</p>
+      </div>
+      <div class="rc reveal">
+        <div class="rc-icon">📈</div>
+        <h3>모델 개선 → 논문 품질 향상</h3>
+        <div class="rc-num" style="color:#FCA5A5">R²=0.52</div>
+        <p>기반 모델 출시 일자와 논문 품질 간 통계적으로 유의미한 상관관계(P&lt;0.00001)가 확인됐습니다. 미래 모델 개선이 자동 생성 논문 품질을 지속 향상시킬 것임을 강력히 시사합니다.</p>
+      </div>
+    </div>
+
+    <!-- SCORE CHART -->
+    <div class="score-box reveal">
+      <div class="score-title">📋 자동화 리뷰어 vs 인간 리뷰어 성능 비교</div>
+      <div class="score-bars">
+        <div class="score-row">
+          <span class="score-lbl">균형 정확도 (AI)</span>
+          <div class="score-track"><div class="score-fill" style="width:69%;background:linear-gradient(90deg,#7C3AED,#A78BFA)">69%</div></div>
+          <span class="score-val">0.69</span>
+        </div>
+        <div class="score-row">
+          <span class="score-lbl">균형 정확도 (인간)</span>
+          <div class="score-track"><div class="score-fill" style="width:66%;background:#4B5563">66%</div></div>
+          <span class="score-val">0.66</span>
+        </div>
+        <div class="score-row">
+          <span class="score-lbl">F1 점수 (AI)</span>
+          <div class="score-track"><div class="score-fill" style="width:62%;background:linear-gradient(90deg,var(--kw-red),#F87171)">0.62</div></div>
+          <span class="score-val">0.62</span>
+        </div>
+        <div class="score-row">
+          <span class="score-lbl">F1 점수 (인간)</span>
+          <div class="score-track"><div class="score-fill" style="width:49%;background:#4B5563">0.49</div></div>
+          <span class="score-val">0.49</span>
+        </div>
+        <div class="score-row">
+          <span class="score-lbl">AUC (AI)</span>
+          <div class="score-track"><div class="score-fill" style="width:69%;background:linear-gradient(90deg,var(--gold),var(--gold-l))">0.69</div></div>
+          <span class="score-val">0.69</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <table class="cmp-table reveal">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>균형 정확도</th>
+          <th>F1 점수</th>
+          <th>AUC</th>
+          <th>FPR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>👤 인간 (NeurIPS)</td><td>0.66</td><td>0.49</td><td>0.65</td><td>0.17</td></tr>
+        <tr><td>🤖 자동 리뷰어 (지식 커트오프 前)</td><td class="best">0.69</td><td class="best">0.62</td><td class="best">0.69</td><td>0.45</td></tr>
+        <tr><td>🤖 자동 리뷰어 (지식 커트오프 後)</td><td>0.66</td><td class="best">0.67</td><td>0.65</td><td>0.52</td></tr>
+        <tr><td>🎲 무작위 판정</td><td>0.50</td><td>0.47</td><td>0.52</td><td>0.47</td></tr>
+        <tr><td>❌ 항상 거부</td><td>0.50</td><td>0.00</td><td>0.50</td><td>0.00</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.75rem;text-align:right">출처: Lu et al. (2026), Table 1. 녹색 강조는 최고 성능값.</p>
+  </div>
+</section>
+
+<!-- LIMITS & ETHICS -->
+<section class="limit-section" id="limits">
+  <div class="container">
+    <span class="sl">한계 및 윤리</span>
+    <h2 class="st">무엇이 아직 부족하고, 무엇이 우려되나?</h2>
+    <p class="sd">저자들은 이 성과의 의미를 인정하면서도 현재의 한계와 사회적 위험을 솔직하게 기술합니다.</p>
+    <div class="limit-grid">
+
+      <div class="lc type-fail reveal">
+        <span class="lc-badge">⚠️ 현재 실패 유형</span>
+        <h3>아이디어와 구현의 결함</h3>
+        <p>일반적인 실패 유형으로는 단순하거나 미개발된 아이디어 생성, 핵심 아이디어의 잘못된 구현, 깊은 방법론적 엄밀성 부족, 실험 구현 오류 등이 있습니다. 주본문과 부록에 그림을 중복 삽입하는 형식 오류도 반복됩니다.</p>
+      </div>
+
+      <div class="lc type-fail reveal">
+        <span class="lc-badge">⚠️ 환각 문제</span>
+        <h3>AI 고유의 신뢰성 문제</h3>
+        <p>부정확한 인용 등 다양한 환각 현상이 발생합니다. AI는 쉽게 속거나 지나치게 확신에 차서 틀리는 경향이 있습니다. 이러한 약점은 일부 개선됐지만 여전히 남아있어 AI Scientist의 출력을 완전히 신뢰하기 어렵게 합니다.</p>
+      </div>
+
+      <div class="lc type-fail reveal">
+        <span class="lc-badge">⚠️ 창의성 한계</span>
+        <h3>개념적 도약의 불확실성</h3>
+        <p>AI 시스템이 위대한 과학적 도약과 같은 새로운 창의적 아이디어를 생산할 수 있는지는 아직 불명확합니다. 현재 AI Scientist는 연산 실험에만 적용됩니다. 물리적 세계의 실험(화학, 생물학 등)은 자동화 실험실 기술의 발전에 달려있습니다.</p>
+      </div>
+
+      <div class="lc type-ethics reveal">
+        <span class="lc-badge">🔴 윤리적 위험</span>
+        <h3>동료 심사 시스템 과부하</h3>
+        <p>자동화된 논문 생성이 이미 과부하 상태인 동료 심사 시스템을 더욱 압박할 수 있습니다. 학술 크레딧을 인위적으로 부풀리거나, 타인의 아이디어를 적절한 출처 표기 없이 활용하거나, 과학자 일자리를 위협할 가능성도 있습니다.</p>
+      </div>
+
+      <div class="lc type-ethics reveal">
+        <span class="lc-badge">🔴 연구 무결성</span>
+        <h3>비윤리적·위험한 실험 가능성</h3>
+        <p>비윤리적이거나 위험한 실험을 AI가 자율적으로 수행할 가능성에 대한 우려가 있습니다. 이를 위해 연구팀은 UBC IRB(H24-02652) 승인과 ICLR 리더십의 명시적 동의를 받았습니다. 사전 프로토콜에 따라 심사 후 결과에 무관하게 모든 논문을 철회했습니다.</p>
+      </div>
+
+      <div class="lc type-future reveal">
+        <span class="lc-badge">🔵 미래 전망</span>
+        <h3>7개월마다 2배씩 성장하는 AI 역량</h3>
+        <p>최근 연구에 따르면 AI가 안정적으로 완수할 수 있는 작업의 길이는 7개월마다 두 배씩 증가합니다. 머신러닝에서는 결함이 있더라도 일단 작동하기 시작하면, 몇 년 안에 역량이 인간을 넘어서는 경우가 많습니다. 미래 버전의 능력이 현재보다 훨씬 강력할 것임을 강하게 시사합니다.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:white">
+  <div class="container">
+    <span class="sl">자주 묻는 질문</span>
+    <h2 class="st">연구자·일반 독자를 위한 Q&A</h2>
+    <div class="faq-list">
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)">
+          <span>The AI Scientist가 통과한 동료 심사는 진짜 심사인가요?</span>
+          <span class="fi-icon">+</span>
+        </button>
+        <div class="fa">
+          <div class="fa-body">네, 진짜 동료 심사입니다. ICLR 2025의 I Can't Believe It's Not Better(ICBINB) 워크숍에 실제로 제출됐으며, 심사위원들은 일부 논문이 AI 생성임을 알았지만 <strong>어떤 논문인지는 몰랐습니다(맹검 심사)</strong>. 43편의 논문 중 하나로 포함돼 심사를 받았고, 평균 6.33점으로 워크숍 합격 기준을 초과했습니다. 워크숍의 수락률은 70%로 메인 컨퍼런스(32%)보다 높지만, 여전히 의미 있는 학술적 기준입니다.</div>
+        </div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)">
+          <span>Claude와 GPT 등 어떤 AI 모델이 사용됐나요?</span>
+          <span class="fi-icon">+</span>
+        </button>
+        <div class="fa">
+          <div class="fa-body">템플릿 프리 버전은 복수의 모델을 역할별로 사용합니다. <strong>OpenAI의 o3</strong>: 아이디어 창안과 실험 중 코드 비판(강력한 추론 능력). <strong>Anthropic의 Claude Sonnet 4</strong>: 코드 생성 (기본값으로 사용). <strong>OpenAI의 GPT-4o</strong>: 비전-언어 작업(비용 효율적). <strong>OpenAI의 o4-mini</strong>: 자동화 리뷰어 구축 및 검토 단계의 추론(비용 효율적). 논문 품질은 기반 모델의 출시 일자와 강한 상관관계를 보이며, 최신 모델일수록 더 좋은 논문을 생성합니다.</div>
+        </div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)">
+          <span>합격한 논문의 내용은 무엇이었나요?</span>
+          <span class="fi-icon">+</span>
+        </button>
+        <div class="fa">
+          <div class="fa-body">합격한 논문은 <strong>신경망의 구성적 일반화 향상에서의 예상치 못한 장애물</strong>을 다룬 부정적 결과 논문이었습니다. ICBINB 워크숍이 "흥미로운 부정적 결과"에 초점을 맞춘 만큼, 구성적 정규화 항을 훈련 손실에 추가하는 방법이 일반화 개선에 실패했다는 내용을 LSTM 기반 신경망 실험을 통해 보고했습니다. 조직위원회는 AI 생성 논문이라는 이유가 아니었다면 <strong>수락됐을 것이라고 밝혔습니다</strong>.</div>
+        </div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)">
+          <span>이 연구가 연구자 직업에 미치는 영향은?</span>
+          <span class="fi-icon">+</span>
+        </button>
+        <div class="fa">
+          <div class="fa-body">저자들은 이 점을 진지하게 다룹니다. 잠재적 위험으로 <strong>과학자 직업 위협</strong>을 명시적으로 언급합니다. 그러나 현재 AI Scientist는 컴퓨터 실험에만 적용 가능하고, 최상위 컨퍼런스 기준은 충족하지 못합니다. 저자들의 시각은 AI가 과학적 발견을 가속화하는 도구로서, 책임 있게 개발되면 인류에게 이롭다는 것입니다. 다만 학술 커뮤니티가 <strong>공개 및 평가 기준을 먼저 확립</strong>해야 한다고 강조합니다.</div>
+        </div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)">
+          <span>한국의 연구자와 어떤 관련이 있나요?</span>
+          <span class="fi-icon">+</span>
+        </button>
+        <div class="fa">
+          <div class="fa-body">몇 가지 차원에서 한국 연구자와 직결됩니다. 첫째, <strong>AI Index 2026(Stanford)에서 한국은 1인당 AI 특허 세계 1위</strong>로 AI 기술 혁신의 선두에 있습니다. 둘째, The AI Scientist는 SK하이닉스·삼성이 공급하는 HBM 메모리가 장착된 GPU로 구동됩니다. 셋째, <strong>자동화된 논문 생성 시스템이 보편화될 경우, 동료 심사 시스템 과부하 문제</strong>는 국내 학술지와 한국 연구자들에게도 직접적 영향을 줍니다. 마지막으로, AI가 학술 글쓰기를 보조하는 수준을 넘어 <strong>독립적 연구 주체로 진화</strong>하는 흐름은 연구 윤리와 교육 정책에 새로운 질문을 던집니다.</div>
+        </div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)">
+          <span>논문을 완전히 자동으로 제출해도 됩니까?</span>
+          <span class="fi-icon">+</span>
+        </button>
+        <div class="fa">
+          <div class="fa-body"><strong>아직 아닙니다.</strong> 저자들은 이 연구를 수행하기 위해 ICLR 리더십의 명시적 허락, 워크숍 조직위원회의 협조, UBC IRB 승인(H24-02652)을 사전에 받았습니다. 사전 프로토콜에 따라 심사 후 모든 논문을 철회했습니다. 저자들은 <strong>"과학 커뮤니티가 공개와 평가에 대한 명확한 기준을 수립하기 전에 완전 자동화 연구물을 출판하는 선례를 남기지 않기 위한 것"</strong>이라고 밝혔습니다. 현 시점에서 무단으로 AI 생성 논문을 제출하는 것은 심각한 연구 윤리 위반에 해당합니다.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="quiz-section" id="quiz">
+  <div class="container">
+    <span class="sl">이해도 퀴즈</span>
+    <h2 class="st">The AI Scientist를 얼마나 이해했나요?</h2>
+    <p class="sd">5개 문제로 핵심 내용을 점검해보세요.</p>
+    <div class="quiz-box">
+      <div class="quiz-progress" id="qprog">문제 1 / 5</div>
+      <div class="quiz-q" id="qq"></div>
+      <div class="quiz-opts" id="qopts"></div>
+      <div class="quiz-feedback" id="qfb"></div>
+      <div class="quiz-nav">
+        <div class="quiz-score-bar">
+          <div class="quiz-score-lbl" id="qslbl">점수: 0 / 0</div>
+          <div class="quiz-score-track"><div class="quiz-score-fill" id="qsfill"></div></div>
+        </div>
+        <button class="quiz-next" id="qnext" onclick="nextQ()" disabled>다음 →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITATION -->
+<section class="cite-section" id="citation">
+  <div class="container">
+    <span class="sl">참고문헌</span>
+    <h2 class="st">원문 논문 정보</h2>
+    <div class="cite-box" id="citeText">
+      Lu, C., Lu, C., Lange, R. T., Yamada, Y., Hu, S., Foerster, J., Ha, D., & Clune, J. (2026). Towards end-to-end automation of AI research. <em>Nature, 651,</em> 914–919. https://doi.org/10.1038/s41586-026-10265-5
+    </div>
+    <button class="cbtn" id="cpBtn" onclick="copyCite()">📋 APA 인용 복사</button>
+    <div class="info-box">
+      <p>
+        📅 투고: 2025년 7월 8일 &nbsp;|&nbsp; ✅ 수락: 2026년 2월 11일 &nbsp;|&nbsp; 🌐 온라인 게재: 2026년 3월 25일<br>
+        📖 저널: <em>Nature</em> · Vol 651 · Pages 914–919<br>
+        🏛️ 소속: Sakana AI (도쿄) · 옥스퍼드 대학교 · UBC · 벡터 연구소<br>
+        🔓 오픈 액세스: CC BY 4.0 · <a href="https://doi.org/10.1038/s41586-026-10265-5" target="_blank">DOI 바로가기</a><br>
+        💻 코드: <a href="https://github.com/SakanaAI/AI-Scientist" target="_blank">github.com/SakanaAI/AI-Scientist</a> (Apache 2.0)
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>이 페이지는 Lu et al. (2026)의 연구를 기반으로 교육 목적으로 제작되었습니다. &nbsp;|&nbsp; <a href="https://donghunc.kr/blog/" target="_blank">donghunc.kr/blog</a> &nbsp;|&nbsp; 광운대학교</p>
+</footer>
+
+<script>
+// PROGRESS + BTT
+window.addEventListener('scroll',()=>{
+  const p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  document.getElementById('prog').style.width=p+'%';
+  document.getElementById('btt').classList.toggle('show',window.scrollY>400);
+});
+document.getElementById('btt').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+// NAV
+document.getElementById('ham').onclick=()=>document.getElementById('mob').classList.toggle('open');
+function cm(){document.getElementById('mob').classList.remove('open')}
+
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('vis'),i*80)}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// PHASE TOGGLE
+function togglePhase(card){
+  const wasOpen=card.classList.contains('expanded');
+  document.querySelectorAll('.phase-card').forEach(c=>{c.classList.remove('expanded');c.querySelector('.phase-hint').textContent='👆 클릭해서 더 보기'});
+  if(!wasOpen){card.classList.add('expanded');card.querySelector('.phase-hint').textContent='👆 클릭해서 접기'}
+}
+
+// FAQ
+function toggleFaq(btn){
+  const item=btn.closest('.fi');
+  const ans=item.querySelector('.fa');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.fi.open').forEach(i=>{i.classList.remove('open');i.querySelector('.fa').style.maxHeight='0'});
+  if(!isOpen){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px'}
+}
+
+// QUIZ
+const questions=[
+  {q:"The AI Scientist가 동료 심사를 통과한 논문의 주제는 무엇이었나요?",opts:["AlphaFold 단백질 구조 예측 개선","신경망 구성적 일반화의 예상치 못한 장애물 (부정적 결과)","대형 언어 모델의 인컨텍스트 학습","트랜스포머 어텐션 메커니즘 최적화"],ans:1,fb:"정답입니다! 합격 논문은 구성적 정규화가 신경망 일반화 개선에 실패했다는 '부정적 결과'를 보고했습니다. ICBINB 워크숍이 흥미로운 부정적 결과에 초점을 맞춘 것과 부합했습니다."},
+  {q:"자동화 리뷰어(Automated Reviewer)의 F1 점수는 인간 리뷰어와 비교해 어떠했나요?",opts:["인간(0.49)보다 낮은 0.39","인간(0.49)과 동일한 0.49","인간(0.49)보다 높은 0.62","인간(0.49)의 두 배인 0.98"],ans:2,fb:"정답입니다! AI 자동화 리뷰어의 F1 점수는 0.62로, 인간 간 합의 수준인 0.49를 초과했습니다. NeurIPS 2021 일관성 실험 기준의 인간 리뷰어보다 더 나은 성과입니다."},
+  {q:"The AI Scientist 템플릿 프리 버전에서 코드 생성에 기본적으로 사용되는 모델은?",opts:["OpenAI GPT-4o","Google Gemini 2.5","Anthropic Claude Sonnet 4","Meta Llama 3"],ans:2,fb:"정답입니다! 템플릿 프리 버전은 코드 생성에 기본적으로 Claude Sonnet 4를 사용합니다. o3는 아이디어 창안, GPT-4o는 비전-언어 작업, o4-mini는 리뷰 단계에 활용됩니다."},
+  {q:"제출한 3편의 논문 중 실제로 동료 심사 기준을 통과한 것은 몇 편이었나요?",opts:["0편 (모두 탈락)","1편","2편","3편 (모두 합격)"],ans:1,fb:"정답입니다! 3편 중 1편만이 워크숍 합격 기준을 초과하는 점수(평균 6.33/10)를 받았습니다. 나머지 2편은 기준 미달이었습니다. 단 수락률 70%의 워크숍임을 감안해야 합니다."},
+  {q:"저자들이 동료 심사 후 모든 AI 생성 논문을 철회한 이유는?",opts:["논문 품질이 낮다고 판단해서","저작권 문제가 발생해서","완전 자동화 연구 출판 기준이 아직 학술 커뮤니티에서 확립되지 않았기 때문","심사위원들이 AI 논문임을 알아채서"],ans:2,fb:"정답입니다! 저자들은 과학 커뮤니티가 완전 자동화 연구물의 공개·평가 기준을 수립하기 전에 선례를 남기지 않기 위해 사전 프로토콜에 따라 모든 논문을 철회했습니다. 이는 책임 있는 AI 연구의 중요한 사례입니다."}
+];
+
+let qi=0,score=0,answered=false;
+
+function renderQ(){
+  const q=questions[qi];
+  document.getElementById('qprog').textContent=`문제 ${qi+1} / ${questions.length}`;
+  document.getElementById('qq').textContent=q.q;
+  document.getElementById('qfb').className='quiz-feedback';
+  document.getElementById('qfb').textContent='';
+  document.getElementById('qnext').disabled=true;
+  answered=false;
+  const optsEl=document.getElementById('qopts');
+  optsEl.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const btn=document.createElement('button');
+    btn.className='quiz-opt';
+    btn.textContent=o;
+    btn.onclick=()=>selectOpt(i);
+    optsEl.appendChild(btn);
+  });
+  updateScoreBar();
+}
+
+function selectOpt(i){
+  if(answered)return;
+  answered=true;
+  const q=questions[qi];
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach((b,idx)=>{
+    if(idx===q.ans)b.classList.add('correct');
+    else if(idx===i)b.classList.add('wrong');
+    b.style.pointerEvents='none';
+  });
+  const fb=document.getElementById('qfb');
+  if(i===q.ans){
+    score++;
+    fb.className='quiz-feedback show ok';
+    fb.innerHTML='✅ ' + q.fb;
+  } else {
+    fb.className='quiz-feedback show no';
+    fb.innerHTML='❌ 아쉽습니다. ' + q.fb;
+  }
+  updateScoreBar();
+  document.getElementById('qnext').disabled=false;
+  document.getElementById('qnext').textContent=qi===questions.length-1?'결과 보기 🎉':'다음 →';
+}
+
+function nextQ(){
+  qi++;
+  if(qi>=questions.length){
+    const pct=Math.round((score/questions.length)*100);
+    const grade=pct>=80?'🏆 우수':pct>=60?'👍 양호':'📚 더 공부해보세요';
+    document.getElementById('qq').textContent=`퀴즈 완료! 총 ${questions.length}문제 중 ${score}개 정답 (${pct}%) — ${grade}`;
+    document.getElementById('qopts').innerHTML='';
+    document.getElementById('qfb').className='quiz-feedback';
+    document.getElementById('qnext').style.display='none';
+    document.getElementById('qprog').textContent='완료!';
+    return;
+  }
+  renderQ();
+}
+
+function updateScoreBar(){
+  const total=qi+(answered?1:0);
+  document.getElementById('qslbl').textContent=`점수: ${score} / ${total}`;
+  document.getElementById('qsfill').style.width=total>0?`${(score/total)*100}%`:'0%';
+}
+
+renderQ();
+
+// COPY
+function copyCite(){
+  const t="Lu, C., Lu, C., Lange, R. T., Yamada, Y., Hu, S., Foerster, J., Ha, D., & Clune, J. (2026). Towards end-to-end automation of AI research. Nature, 651, 914–919. https://doi.org/10.1038/s41586-026-10265-5";
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById('cpBtn');
+    b.textContent='✅ 복사 완료!';b.classList.add('done');
+    setTimeout(()=>{b.textContent='📋 APA 인용 복사';b.classList.remove('done')},2500);
+  });
+}
+</script>
+</body>
+</html>
